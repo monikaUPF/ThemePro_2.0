@@ -59,16 +59,8 @@ cd /[local_path_to_folder]/ThemePro_2.0/backend
 python3 themazo.py
 ```
 * Embeddings take a short while to load. Please, be patient and wait until you see these lines at the bottom of the terminal output:
-loading spacy
-loaded
-loading embeddings
-loaded
- * Serving Flask app "themazo" (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: on
- * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+
+Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 
 
 3) Open a tab in your browser and go to http://localhost/ThemePro
