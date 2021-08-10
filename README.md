@@ -49,12 +49,12 @@ sudo docker run -it -p 5002:5002 synesthesiam/mozillatts:en
 
 * Wait until you see this message at the bottom of terminal ouput:
  > Generator Model: multiband_melgan_generator
- * Serving Flask app "mozillatts" (lazy loading)
- * Environment: production
+  Serving Flask app "mozillatts" (lazy loading)
+  Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
- * Debug mode: off
-[INFO]  * Running on http://0.0.0.0:5002/ (Press CTRL+C to quit)
+  Debug mode: off
+[INFO]  Running on http://0.0.0.0:5002/ (Press CTRL+C to quit)
 
 
 2) Open a second terminal and change directory to the backend folder inside ThemePro_2.0. Then, run the main script called "themazo.py":
