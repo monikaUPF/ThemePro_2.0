@@ -2,19 +2,22 @@
 
 This code is part of a scientific publication presented in the Show&tell track of INTERSPEECH 2021. It is a second iteration of a previous demo published in LREC2020 that could not be presented due to the conference cancellation for the COVID-19 pandemic.
 
+## Citation
+
 Please, cite these papers if you use this code:
 
 Dominguez, M., Soler, J., & Wanner, L. (2021). ThemePro: 2.0: Showcasing the Role of Thematic Progression in Engaging Human-Computer Interaction. In Proceedings of INTERSPEECH, Brno, Czechia.
 
 Dominguez, M., Soler, J., & Wanner, L. (2020). ThemePro: A Toolkit for the Analysis of Thematic Progression. In Proceedings of The 12th Language Resources and Evaluation Conference (pp. 1000-1007).
 
+
+## Installation instructions
+
 To run the demo, you will need a working Docker installation to run the TTS application (See https://www.docker.com/get-started).
 
 The website runs locally on your computer. Please, make sure you follow the installation instructions below. 
 
 WARNING: Spacy and neuralcoref versions may cause failure if they do not meet these requirements.
-
-## Installation instructions
 
 ```
 apt-get update
