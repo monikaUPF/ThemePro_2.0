@@ -49,6 +49,7 @@ pip3 install python-Levenshtein
 1) Navigate to the ThemePro_2.0/ folder in your computer, download the TTS repository and run the docker:
 
 ```
+cd /[local_path_to_folder]/ThemePro_2.0/
 git clone https://github.com/synesthesiam/docker-mozillatts.git
 cd /[local_path_to_folder]/ThemePro_2.0/docker-mozillatts
 sudo docker run -it -p 5002:5002 synesthesiam/mozillatts:en
@@ -59,11 +60,11 @@ sudo docker run -it -p 5002:5002 synesthesiam/mozillatts:en
 [INFO]  Running on http://0.0.0.0:5002/ (Press CTRL+C to quit)
 
 
-2) Open a second terminal and change directory to the backend folder inside ThemePro_2.0. Then, run the main script called "themazo.py":
+2) Open a second terminal and change directory to the backend folder inside ThemePro_2.0. Then, run the main script:
 
 ```
-cd /[local_path_to_folder]/ThemePro_2.0/backend
-python3 themazo.py
+cd /[local_path_to_folder]/ThemePro_2.0/backend/
+python3 main.py
 ```
 * Embeddings take a short while to load. Please, be patient and wait until you see these lines at the bottom of the terminal output:
 
@@ -72,7 +73,7 @@ Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 
 3) Open a tab in your browser and go to http://localhost/ThemePro
 
-4) Copy-paste or write a text in the main box and click on run. Then, navigate to the desired tag to see the output.
+4) Copy-paste or write a text in the main box and click on 'Submit'. Then, navigate to the desired tag to see the output.
 
-* Remember you must click on the Synth button to call the TTS and thus generate the speech output.
+* Remember you must click on the 'Synth' button at the 'ThemePro TTS' tab if you want to generate the speech output.
 

@@ -126,12 +126,15 @@ def getThematicity():
 
 @app.route('/getThematicProgression', methods=["POST"])
 def getThematicProgression():
-	return jsonify("")
+    iB = BlockTTS(cache["corefs"], cache["iT"], model, cache["sentences"])
+    dictJSON = {}
+    dictJSON["blocks"] = iB.blocks
+    jsonStr = json.dumps(dictJSON)
+    return jsonify(jsonStr)
 
 @app.route('/getBlocks', methods=['POST'])
 def getBlocks():
     iB = BlockTTS(cache["corefs"], cache["iT"], model, cache["sentences"])
-    cache["blocks"] = iB
     dictJSON = {}
     dictJSON["blocks"] = iB.blocks
     jsonStr = json.dumps(dictJSON)
