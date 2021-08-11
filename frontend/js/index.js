@@ -47,9 +47,9 @@ function manageSubmitButton()
 	  	var height = $( window ).height();
 	  	height = height - $("#pillWrapper").height() - $(".onoffswitch").height() - 20;
 	  	$("#graphContainer").height(height);
+	  	$("#corefContainer").height(height);
 	  	$("#themContainer").height(height);
 	  	$("#themProgContainer").height(height);
-	  	$("#corefContainer").height(height);
 	  	$("#argumentContainer").height(height);
 
 	  	$("#header").hide()
@@ -57,27 +57,27 @@ function manageSubmitButton()
 	  	var text =  $('textarea#inputBox').val();
 	  	var data = {"text": text};
         console.log(data)
-	    $.post( "http://192.168.1.51:5000/getConll", data ,function( dataJSON ) {
+	    $.post( "http://0.0.0.0:5000/getConll", data ,function( dataJSON ) {
 		    displayTree(dataJSON, 0);
 		    displayCorefs(dataJSON);
 		    globalDATA = dataJSON;
 		}, "json");
 
-		$.post( "http://192.168.1.51:5000/getThematicity", function( dataJSON ) {
+		$.post( "http://0.0.0.0:5000/getThematicity", function( dataJSON ) {
 		    displayThem(dataJSON);
    		    displayArguments(dataJSON);
 
 		}, "json");
 
-		/*
-		$.post( "http://192.168.1.51:5000/getThematicProgression", function( dataJSON ) {
-		    displayThematicProgression(dataJSON);
-		}, "json");*/
 
-		$.post( "http://192.168.1.51:5000/getBlocks", function( dataJSON ) {
+		$.post( "http://0.0.0.0:5000/getBlocks", function( dataJSON ) {
 		    displayBlocks(dataJSON);
 		}, "json");
 		
+		$.post( "http://0.0.0.0:5000/getThematicProgression", function( dataJSON ) {
+		    displayThematicProgression(dataJSON);
+		}, "json");
+
 		$("#myonoffswitch").prop("checked",false);
   	});
 }
@@ -86,7 +86,7 @@ function getWav(text, i)
 {
 	console.log(i);
 
-	fetch('http://192.168.1.51:5002/api/tts?text=' + encodeURIComponent(text), {cache: 'no-cache'}).then(function(res) {
+	fetch('http://0.0.0.0:5002/api/tts?text=' + encodeURIComponent(text), {cache: 'no-cache'}).then(function(res) {
 			if (!res.ok) throw Error(res.statusText)
 				return res.blob()
 			}).then(function(blob) {
@@ -102,6 +102,8 @@ function displayBlocks(dataJSON)
 	var obj = $.parseJSON(dataJSON);
 	$("#ttsContainer").html();
 	let idBlock = 1;
+	let counter = 1;
+	console.log(obj);
 	for(var p = 0; p<obj["blocks"].length; p++)
 	{
 		var block = obj["blocks"][p];
@@ -109,14 +111,19 @@ function displayBlocks(dataJSON)
 		$("#ttsContainer").append("<div class='block' id='block_"+idBlock+"'></div>");
 		$("#ttsContainer #block_"+idBlock).append("<b>Block "+idBlock+"</b>");
 		$("#ttsContainer #block_"+idBlock).append("<ol></ol>");
+		$("#ttsContainer #block_"+idBlock+" ol").attr('start',counter);
 
 		for(var q = 0; q<block.length; q++)
 		{
 			let sentences = block[q];
+
 			let text = sentences["fullsent"];
 			blockStr += text + ".";
 			$("#ttsContainer #block_"+idBlock+" ol").append("<li>"+text+"</li>");
+			counter++;
+
 		}
+
 		
 		$("#ttsContainer #block_"+idBlock).append("<button id=synth_"+idBlock+" class='synthesize glow-on-hover'>Synth</button>")
 		idBlock++;
@@ -215,138 +222,99 @@ function displayArguments(dataJSON)
 
 function displayThematicProgression(dataJSON)
 {
-	var nodes = [];
-	var edges = [];
-
 	var obj = $.parseJSON(dataJSON);
-	var components = obj["components"];
-	var hyper = obj["hypernode"];
-	var distances = obj["distances"];
-
-
-	var node = {};
-    node.id = 0;
-    node.label = "First Sentence";
-    node.group = 0;
-    node.title = hyper;
-    nodes.push(node);
-
-    var THEME_OFFSET = 100;
-    var RHEME_OFFSET = 1000;
-
-	for(var i = 0 ; i< components.length; i++)
+	$("#themProgContainer").html();
+	let idBlock = 1;
+	let counter = 1;
+	for(var p = 0; p<obj["blocks"].length; p++)
 	{
-		var nodeTheme = {};
-	    nodeTheme.id = i+THEME_OFFSET;
-	    nodeTheme.label = "Theme";
-	    nodeTheme.group = 1;
-	    nodeTheme.title = components[i][0];
-	    nodeTheme.shape="circle";
-	    nodes.push(nodeTheme);
+		var sentences = obj["blocks"][p];
+		$( "#themProgContainer" ).append("<br/><br/><h4>Block "+ idBlock +"</h3><span id='sentProg_"+idBlock+"'></span>");
 
-	    if( i < components.length-1)
-	    {
-		    var nodeRheme = {};
-		    nodeRheme.id = i+RHEME_OFFSET;
-		    nodeRheme.label = "Rheme";
-		    nodeRheme.group = 2;
-		    nodeRheme.title = components[i][1];
-		    nodeRheme.shape="circle";
-	    	nodes.push(nodeRheme);
-
-		}
-	}
-
-	var THRESHOLD = 1;
-	for(var j = 1; j< distances.length; j++)
-	{
-		
-		if(distances[j][0] != -10 && distances[j][0] < THRESHOLD)
+		for(var q = 0; q<sentences.length; q++)
 		{
-			var edgeTheme = {};
-			edgeTheme.from = j-1+THEME_OFFSET;
-			edgeTheme.to = j+THEME_OFFSET
-			if(distances[j][0] == "coref")
+			let sentence = sentences[q];
+			var them = sentence["components"];
+			var tokens = sentence["tokens"];
+			var progression = sentence["prog_type"]
+
+			var currentSentSelector = "#sentProg_"+counter;
+			$( "#themProgContainer" ).append("<h4></h3><span id='sentProg_"+counter+"'></span>");
+			$(currentSentSelector).append("<span id='sentProg_'>"+counter+".</span>");
+
+			var sentenceArray = [];
+			sentenceArray.push("<span id=annProg_"+j+">");
+			for(var c =0; c<tokens.length;c++)
 			{
-				edgeTheme.label = "coref";
+				sentenceArray.push(tokens[c]);
 			}
-			else{
-				edgeTheme.label = String(distances[j][0].toFixed(2));
-			}
-			edgeTheme.font = {align: 'top'};
-			edgeTheme.arrows = "from";
-			edges.push(edgeTheme);
-		}
-
-		if(distances[j][1] != -10 && distances[j][1] < THRESHOLD)
-		{
-			var edgeRheme = {};
-			edgeRheme.label = String(distances[j][1].toFixed(2));
-			edgeRheme.from = j-1+RHEME_OFFSET;
-			edgeRheme.to = j+THEME_OFFSET
-			edgeRheme.font = {align: 'top'};
-			edgeRheme.arrows = "from";
-			edges.push(edgeRheme);
-		}
-
-		
-
-		if(distances[j][2] != -10 && distances[j][2] < THRESHOLD)
-		{
-			var edgeHyper = {};
-			edgeHyper.from = j+THEME_OFFSET
-			edgeHyper.to = 0;
-			edgeHyper.label = String(distances[j][2].toFixed(2));
-			edgeHyper.font = {align: 'top'};
-			edgeHyper.arrows = "to";
-			edges.push(edgeHyper);
-		}
-		
-	}
-
-	var len = nodes.length;
-	for(var i = 0 ; i< len; i++)
-	{
-		var id = nodes[i].id;
-		var found = false;
-		for(var j=0; j< edges.length;j++)
-		{
-			if(edges[j].from == id || edges[j].to == id)
+			for (var j = 0; j < them.length; j++) 
 			{
-				found = true;
-				break;
+				var from = them[j][0] - 1;
+				var to = them[j][1] - 1;
+				var label = them[j][2];
+				var toAppend = "</span>";
+				var toPrepend;
+				if(label[0] == "R")
+				{
+					if(q == 0)
+					{
+						toPrepend = "<span class='rheme badge badge-pill badge-danger'>";
+					}
+					else if(q == 1)
+					{
+						toPrepend = "<span class='rheme badge badge-pill badge-success'>";
+					}
+					else
+					{
+						toPrepend = "<span class='rheme badge badge-pill badge-primary'>";
+					}
+					
+				}
+				else if(label[0] == "S")
+				{
+					toPrepend = "<span class='specifier badge badge-pill badge-secondary'>";
+				}
+				else if(label[0] == "T")
+				{
+					if(q == 0)
+					{
+						toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+					}
+					else if(q == 1)
+					{
+						if(progression == "linear")
+						{
+							toPrepend = "<span class='rheme badge badge-pill badge-danger'>";
+						}
+						else
+						{
+							toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+						}
+					}
+					else if(q == 2)
+					{
+						if(progression == "linear")
+						{
+							toPrepend = "<span class='rheme badge badge-pill badge-success'>";
+						}
+						else
+						{
+							toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+						}
+					}
+				}
+				sentenceArray[from+1] = toPrepend + sentenceArray[from+1];
+				sentenceArray[to+1] = sentenceArray[to+1] + toAppend;
+				sentenceArray.push("</span>");
 			}
+			$(currentSentSelector).append(sentenceArray.join(" "))
+			counter++;
 		}
-		if(!found)
-		{
-			nodes.splice(i,1);
-			len = nodes.length;
-			i--;
-		}
+		idBlock++;
 	}
-
-
-	var container = document.getElementById('themProgContainer');
-    var data = {
-        nodes: nodes, 
-        edges: edges
-    };
-    var options = {
-
-	};
-
-    networkThem = new vis.Network(container, data, options);
-
-
-  	$('#them a').on('click', function (e) {
-	  e.preventDefault();
-	  $(this).tab('show');
-	  networkThem.fit();
-	});
-
-
+	$( "#themProgContainer" ).css({"overflow":"auto", "overflow-x":"none"});
 }
-
 
 function manageOnOffSwitch()
 {
@@ -533,7 +501,7 @@ function displayThem(dataJSON)
 		var dictHighlight = {};
 		var currentSentSelector = "#sent_"+p;
 
-		$( "#themContainer" ).append("<br/><br/><h4>Sentence Number "+(p+1)+"</h3><span id='sent_"+p+"'></span>");
+		$( "#themContainer" ).append("<br/><br/><h4>Sentence "+(p+1)+"</h3><span id='sent_"+p+"'></span>");
 		
 		//$(currentSentSelector).append("<span id='ann_in'>"+sentence+"</span><br/>");
 
@@ -570,11 +538,8 @@ function displayThem(dataJSON)
 				{
 					toPrepend = "<span class='theme badge badge-pill badge-warning'>";
 				}
-
 				sentenceArray[from+1] = toPrepend + sentenceArray[from+1];
 				sentenceArray[to+1] = sentenceArray[to+1] + toAppend;
-
-			
 			}
 			sentenceArray.push("</span><br/>");
 			$(currentSentSelector).append(sentenceArray.join(" "))
@@ -583,5 +548,4 @@ function displayThem(dataJSON)
 		$(currentSentSelector).append("<br/>");
 	}
 	$( "#themContainer" ).css({"overflow":"auto", "overflow-x":"none"});
-	
 }
