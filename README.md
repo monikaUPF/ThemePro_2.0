@@ -32,7 +32,7 @@ git clone https://github.com/huggingface/neuralcoref.git
 cd neuralcoref && pip3 install -r requirements.txt && pip3 install -e .
 
 git clone https://github.com/monikaUPF/ThemePro_2.0.git 
-cd /[path_to_your_folder]/ThemePro_2.0/backend/embeddings 
+cd /[path_to_your_folder]/ThemePro_2.0/backend/embeddings/ 
 
 wget https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz
 mv GoogleNews-vectors-negative300.bin.gz google.bin.gz

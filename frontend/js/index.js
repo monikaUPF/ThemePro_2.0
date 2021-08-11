@@ -112,8 +112,9 @@ function displayBlocks(dataJSON)
 
 		for(var q = 0; q<block.length; q++)
 		{
-			let text = block[q];
-			blockStr += text + " .";
+			let sentences = block[q];
+			let text = sentences["fullsent"];
+			blockStr += text + ".";
 			$("#ttsContainer #block_"+idBlock+" ol").append("<li>"+text+"</li>");
 		}
 		

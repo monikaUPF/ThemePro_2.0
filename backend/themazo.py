@@ -131,6 +131,7 @@ def getThematicProgression():
 @app.route('/getBlocks', methods=['POST'])
 def getBlocks():
     iB = BlockTTS(cache["corefs"], cache["iT"], model, cache["sentences"])
+    cache["blocks"] = iB
     dictJSON = {}
     dictJSON["blocks"] = iB.blocks
     jsonStr = json.dumps(dictJSON)
