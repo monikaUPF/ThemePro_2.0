@@ -279,28 +279,28 @@ function displayThematicProgression(dataJSON)
 				{
 					if(q == 0)
 					{
-						toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+						toPrepend = "<span class='theme badge badge-pill badge-warning'>";
 					}
 					else if(q == 1)
 					{
 						if(progression == "linear")
 						{
-							toPrepend = "<span class='rheme badge badge-pill badge-danger'>";
+							toPrepend = "<span class='theme badge badge-pill badge-danger'>";
 						}
 						else
 						{
-							toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+							toPrepend = "<span class='theme badge badge-pill badge-warning'>";
 						}
 					}
 					else if(q == 2)
 					{
 						if(progression == "linear")
 						{
-							toPrepend = "<span class='rheme badge badge-pill badge-success'>";
+							toPrepend = "<span class='theme badge badge-pill badge-success'>";
 						}
 						else
 						{
-							toPrepend = "<span class='rheme badge badge-pill badge-warning'>";
+							toPrepend = "<span class='theme badge badge-pill badge-warning'>";
 						}
 					}
 				}

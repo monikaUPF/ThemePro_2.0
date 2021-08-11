@@ -48,31 +48,34 @@ fieldset[disabled] .btn-sample.active {
 }
 
 
-#themContainer .proposition::before
+.proposition::before
 {
 	 content: "(P) ";
 	 color:yellow;
 }
 
-#themContainer .theme::before
+.theme::before
 {
 	 content: "(T) ";
 	 color:blue;
 }
 
-#themContainer .specifier::before
+.specifier::before
 {
 	 content: "(SP) ";
 	 color:blue;
 }
 
-#themContainer .rheme::before
+.rheme::before
 {
 	 content: "(R) ";
 	 color:blue;
 }
 #themContainer{
 	font-size: 18px;
+}
+#themProgContainer{
+    font-size: 18px;
 }
 
 

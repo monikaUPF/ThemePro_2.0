@@ -16,16 +16,16 @@
 		  		<a class="btn btn-large btn-sample active" data-toggle="pill" href="#home">Syntactic Tree</a>
 		  </li>
 		  
-		  <li class="nav-item pill-2">
+		  <li id="coref" class="nav-item pill-2">
 		  		<a class="btn btn-large btn-sample" data-toggle="pill" href="#menu1">Coref Chains</a>
 		  </li>
 
 		  
-		  <li id="them" class="nav-item pill-3">
+		  <li class="nav-item pill-3">
 		  		<a class="btn btn-large btn-sample" data-toggle="pill" href="#menu2">Thematicity</a>
 		  </li>
 		
-		  <li id="coref" class="nav-item pill-4">
+		  <li id="them" class="nav-item pill-4">
 		  		<a class="btn btn-large btn-sample" data-toggle="pill" href="#menu3">Thematic Progression</a>
 		  </li>
 		  <li id="tts" class="nav-item pill-5">
