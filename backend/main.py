@@ -5,7 +5,6 @@ from logging.handlers import RotatingFileHandler
 from logging import Formatter, INFO
 import spacy
 from themaParse import ThemParser
-from themaProg import ThematicProgression
 import neuralcoref
 import gensim
 from flask import g

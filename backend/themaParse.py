@@ -341,31 +341,3 @@ class ThemParser:
 			self.conll += str(sentence) + "\n"
 
 		self.levels = array4web
-
-		#print("ARRAY FOR WEB")
-		#print(array4web)
-
-'''
-			tokens = []
-			# Code for printing CONLL output
-			for token in sentence:
-				tokens.append(str(token))
-
-			tokens= "\n".join(tokens)
-			new_sent.append(tokens)
-
-		new_conll = "\n\n".join(new_sent)
-#		print(new_conll)
-		result = open(path + "output.conll", "w")
-		result.write(new_conll)
-		result.close()
-		print("New conll has been printed")
-'''
-
-if __name__ == '__main__':
-	path = "/home/upf/Desktop/docs/themaParse/"
-	pathIn = "/home/upf/Desktop/docs/themaParse/test/complexSent.conll"
-	# cd Desktop/de && python mod1_synt2them.py out_eval.conll eval_them.conll
-	#path = sys.argv[1]
-
-	iT = ThemParser(path, pathIn)
