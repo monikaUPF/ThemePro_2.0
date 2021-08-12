@@ -111,9 +111,9 @@ class BlockTTS():
 
     def string_match(self, lastThem, currentThem):
         if "T1" in currentThem:
-            if currentThem["T1"].lower() in lastThem["T1"].lower():
+            if "T1" in lastThem and currentThem["T1"].lower() in lastThem["T1"].lower():
                 return 'continuous'
-            if currentThem["T1"].lower() in lastThem["R1"].lower():
+            if "R1" in lastThem and currentThem["T1"].lower() in lastThem["R1"].lower():
                 return 'linear'
 
         return 'simple'
