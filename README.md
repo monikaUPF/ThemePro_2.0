@@ -13,9 +13,11 @@ Dominguez, M., Soler, J., & Wanner, L. (2020). ThemePro: A Toolkit for the Analy
 
 ## Installation instructions
 
-To run the demo, you will need a working Docker installation to run the TTS application (See https://www.docker.com/get-started).
+To run the text-to-speech (TTS) module, you will need a working Docker installation (See https://www.docker.com/get-started).
+The ThemePro_2.0 demo can be run without the TTS engine, but you won't be able to hear the speech output.
 
-The website runs locally on your computer. Please, make sure you follow the installation instructions below. 
+The website runs locally on your computer. 
+Please, make sure you follow the installation instructions below. 
 
 WARNING: Spacy and neuralcoref versions may cause failure if they do not meet these requirements.
 
@@ -46,7 +48,7 @@ pip3 install python-Levenshtein
 
 ## Running the demo
 
-1) Navigate to the ThemePro_2.0/ folder in your computer, download the TTS repository and run the docker:
+1) Navigate to the ThemePro_2.0/ folder in your computer, download the TTS repository and run the docker. You may want to skip this step if you don't want to get the speech output.
 
 ```
 cd /[local_path_to_folder]/ThemePro_2.0/
